@@ -1,11 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import {Text, StyleSheet, View, TouchableHighlight, Alert} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import axios from 'axios';
 
-const Formulario = () => {
-  const [moneda, guardarMoneda] = useState('');
-  const [criptomoneda, guardarCriptoMoneda] = useState('');
+const Formulario = ({
+  moneda,
+  guardarMoneda,
+  criptomoneda,
+  guardarCriptoMoneda,
+  guardarConsultarAPI,
+  consultarAPI,
+}) => {
   const [criptomonedas, guardarCriptoMonedas] = useState([]);
 
   useEffect(() => {
@@ -20,12 +25,20 @@ const Formulario = () => {
 
   const obtenerMoneda = moneda => {
     guardarMoneda(moneda);
-    console.log(moneda);
   };
 
   const obtenerCriptoMoneda = cripto => {
     guardarCriptoMoneda(cripto);
-    console.log(cripto);
+  };
+  const cotizarPrecio = () => {
+    if (moneda.trim() === '' || criptomoneda.trim() === '') {
+      mostrarAlerta();
+      return;
+    }
+    guardarConsultarAPI(true)
+  };
+  const mostrarAlerta = () => {
+    Alert.alert('Error...', 'Ambos campos son obligatorios', [{text: 'OK'}]);
   };
   return (
     <>
@@ -53,6 +66,11 @@ const Formulario = () => {
             />
           ))}
         </Picker>
+        <TouchableHighlight
+          onPress={() => cotizarPrecio()}
+          style={styles.btnCotizar}>
+          <Text style={styles.textoCotizar}>Cotizar</Text>
+        </TouchableHighlight>
       </View>
     </>
   );
@@ -64,6 +82,18 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontSize: 22,
     marginVertical: 20,
+  },
+  btnCotizar: {
+    backgroundColor: '#5e49e2',
+    padding: 10,
+    marginTop: 20,
+  },
+  textoCotizar: {
+    color: '#fff',
+    fontSize: 18,
+    fontFamily: 'Lato-Black',
+    textTransform: 'uppercase',
+    textAlign: 'center',
   },
 });
 

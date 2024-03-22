@@ -4,13 +4,17 @@ import {
   Text,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 
 import Header from './components/Header';
 import Formulario from './components/Formulario';
 
+
 const App = () => {
+  const [moneda, guardarMoneda] = useState('');
+    const [criptomoneda, guardarCriptoMoneda] = useState('');
+    const [consultarAPI, guardarConsultarAPI] = useState(false)
   return (
     <>
       <View>
@@ -21,7 +25,14 @@ const App = () => {
         />
       </View>
       <View style={styles.contenido} >
-        <Formulario/>
+        <Formulario
+          moneda={moneda}
+          guardarMoneda={guardarMoneda}
+          criptomoneda={criptomoneda}
+          guardarCriptoMoneda={guardarCriptoMoneda}
+          consultarAPI={consultarAPI}
+          guardarConsultarAPI={guardarConsultarAPI}
+        />
       </View>
     </>
   );
