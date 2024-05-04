@@ -9,6 +9,7 @@ import axios from 'axios';
 
 import Header from './components/Header';
 import Formulario from './components/Formulario';
+import Cotizacion from './components/Cotizacion';
 
 
 const App = () => {
@@ -22,7 +23,8 @@ const App = () => {
         if (consultarAPI){
           const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda},ETH&tsyms=${moneda}`
           const resultado = await axios.get(url)
-          guardarResultado(resultado.data.DISPLAY [criptomoneda][moneda]);
+          guardarResultado(resultado.data.DISPLAY[criptomoneda][moneda]);
+         
           guardarConsultarAPI(false)
         }
       }
@@ -47,6 +49,9 @@ const App = () => {
           guardarCriptoMoneda={guardarCriptoMoneda}
           consultarAPI={consultarAPI}
           guardarConsultarAPI={guardarConsultarAPI}
+        />
+        <Cotizacion
+          resultado={resultado}
         />
       </View>
     </>
